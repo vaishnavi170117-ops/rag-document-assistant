@@ -1,9 +1,6 @@
 # RAG Document Assistant
 
-A Retrieval-Augmented Generation (RAG) application that answers questions
-from your documents and cites the exact source (filename + page). It only
-answers from the provided documents and says "I don't know" when the answer
-isn't there — no hallucinations.
+A Retrieval-Augmented Generation (RAG) application that answers questions from your documents and cites the exact source (filename + page). It only answers from the provided documents and says "I don't know" when the answer isn't there — no hallucinations.
 
 ## What it does
 
@@ -23,69 +20,73 @@ isn't there — no hallucinations.
 
 ## How it works (pipeline)
 
-Document → Ingestion (extract text + metadata) → Chunking (overlapping pieces)
-→ Embedding (text to vectors) → Vector store (FAISS) → Retrieval (top-k by meaning)
-→ Generation (grounded, cited answer)
+Document → Ingestion (extract text + metadata) → Chunking (overlapping pieces) → Embedding (text to vectors) → Vector store (FAISS) → Retrieval (top-k by meaning) → Generation (grounded, cited answer)
 
-The design is modular: each stage is a separate module that passes plain data
-to the next, so components (e.g. the LLM provider or retrieval method) can be
-swapped without rewriting the pipeline.
+The design is modular: each stage is a separate module that passes plain data to the next, so components (e.g. the LLM provider or retrieval method) can be swapped without rewriting the pipeline.
 
 ## Setup
 
 1. Clone the repository and create a virtual environment:
 
-python -m venv .venv
-.venv\Scripts\Activate.ps1 # Windows
-
+        python -m venv .venv
+        .venv\Scripts\Activate.ps1
 
 2. Install dependencies:
 
-pip install -r requirements.txt
-
+        pip install -r requirements.txt
 
 3. Add your API key:
 
-copy .env.example .env
+        copy .env.example .env
 
-
-   Then open `.env` and paste your free Gemini API key
-   (get one at https://aistudio.google.com/apikey).
+   Then open `.env` and paste your free Gemini API key (get one at https://aistudio.google.com/apikey).
 
 ## Usage (Phase 1 — command line)
 
 Put a document in `data/raw/`, then run:
 
-python -m scripts.cli data/raw/your_document.pdf
-
+        python -m scripts.cli data/raw/your_document.pdf
 
 Ask questions in the terminal. Type `exit` to quit.
 
 ## Configuration
 
-All settings live in `config.yaml` — embedding model, chunk size, overlap,
-top-k, and the LLM model. Change them there without touching any code.
+All settings live in `config.yaml` — embedding model, chunk size, overlap, top-k, and the LLM model. Change them there without touching any code.
 
 ## Project structure
 
-rag-document-assistant/
-├── config.yaml # all tunable settings
-├── requirements.txt # dependencies
-├── src/
-│ ├── config.py # loads settings + secrets
-│ ├── ingestion.py # reads PDF/DOCX/TXT into text + metadata
-│ ├── chunking.py # splits text into overlapping chunks
-│ ├── embedding.py # turns text into vectors
-│ ├── vectorstore.py # FAISS: store and search vectors
-│ ├── retrieval.py # finds the most relevant chunks
-│ ├── llm.py # provider-agnostic LLM client
-│ └── generation.py # builds grounded prompt, returns cited answer
-├── scripts/
-│ └── cli.py # Phase 1 command-line RAG loop
-└── data/
-├── raw/ # your source documents
-└── index/ # saved vector index
+        rag-document-assistant/
+        ├── config.yaml
+        ├── requirements.txt
+        ├── src/
+        │   ├── config.py
+        │   ├── ingestion.py
+        │   ├── chunking.py
+        │   ├── embedding.py
+        │   ├── vectorstore.py
+        │   ├── retrieval.py
+        │   ├── llm.py
+        │   └── generation.py
+        ├── scripts/
+        │   └── cli.py
+        └── data/
+            ├── raw/
+            └── index/
 
+Module responsibilities:
+
+- `config.yaml` — all tunable settings (model, chunk size, top-k)
+- `src/config.py` — loads settings and secrets
+- `src/ingestion.py` — reads PDF/DOCX/TXT into text + metadata
+- `src/chunking.py` — splits text into overlapping chunks
+- `src/embedding.py` — turns text into vectors
+- `src/vectorstore.py` — FAISS: store and search vectors
+- `src/retrieval.py` — finds the most relevant chunks
+- `src/llm.py` — provider-agnostic LLM client
+- `src/generation.py` — builds grounded prompt, returns cited answer
+- `scripts/cli.py` — Phase 1 command-line RAG loop
+- `data/raw/` — your source documents
+- `data/index/` — saved vector index
 
 ## Roadmap
 
