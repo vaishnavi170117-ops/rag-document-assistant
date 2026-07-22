@@ -1,0 +1,21 @@
+# ─── All your project settings live here. ───
+# Change these values instead of digging through code.
+
+embedding:
+  model_name: "all-MiniLM-L6-v2"   # the model that turns text into numbers
+
+chunking:
+  chunk_size: 500       # how many characters per chunk
+  chunk_overlap: 100    # how much chunks overlap (stops ideas being cut in half)
+
+retrieval:
+  top_k: 4              # how many chunks to grab per question
+
+llm:
+  provider: "gemini"                # which AI provider to use (swappable)
+  model: "gemini-flash-latest"      # always points to the current free Flash model
+  temperature: 0.0                  # 0 = factual & consistent (no making things up)
+  max_tokens: 1024                  # max length of the AI's answer
+paths:
+  raw_dir: "data/raw"          # where your documents go
+  index_dir: "data/index"      # where the saved search index goes

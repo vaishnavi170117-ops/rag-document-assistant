@@ -1,0 +1,9 @@
+# --- Core RAG pipeline ---
+sentence-transformers==3.0.1     # turns text into numbers (embeddings)
+faiss-cpu==1.11.0                # vector store: finds similar chunks fastanthropic==0.39.0                # talks to the AI (Claude) to write answers
+python-dotenv==1.0.1             # safely loads your secret API key
+pyyaml==6.0.2                    # reads the config.yaml settings file
+numpy==2.1.3                     # math for the number-lists (vectors)
+# --- Reading documents ---
+pypdf==4.3.1                     # reads PDF files + page numbers
+python-docx==1.1.2               # reads Word (.docx) files
