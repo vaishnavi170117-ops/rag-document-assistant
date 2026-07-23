@@ -43,6 +43,14 @@ class VectorStore:
             results.append(chunk)
         return results
 
+    def indexed_sources(self):
+        """Return the set of filenames already stored in this index."""
+        return {c["source"] for c in self.metadata}
+
+    def has_source(self, filename):
+        """Check whether a given file has already been indexed."""
+        return filename in self.indexed_sources()
+
     def save(self, index_dir=None):
         """Save the FAISS index and the metadata list to disk."""
         index_dir = index_dir or config.index_dir
