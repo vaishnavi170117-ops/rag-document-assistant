@@ -53,6 +53,11 @@ class Config:
         return self._cfg["retrieval"]["top_k"]
 
     @property
+    def use_hybrid(self):
+        # .get() with a default means the app still works if the setting is missing.
+        return self._cfg["retrieval"].get("use_hybrid", False)
+
+    @property
     def llm_provider(self):
         return self._cfg["llm"]["provider"]
 

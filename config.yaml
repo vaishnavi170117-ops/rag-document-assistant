@@ -10,12 +10,14 @@ chunking:
 
 retrieval:
   top_k: 4              # how many chunks to grab per question
+  use_hybrid: true      # true = BM25 + vector fusion, false = vector only
 
 llm:
   provider: "gemini"                # which AI provider to use (swappable)
   model: "gemini-flash-latest"      # always points to the current free Flash model
   temperature: 0.0                  # 0 = factual & consistent (no making things up)
-  max_tokens: 1024                  # max length of the AI's answer
+  max_tokens: 4096                  # max length of the AI's answer
+
 paths:
   raw_dir: "data/raw"          # where your documents go
   index_dir: "data/index"      # where the saved search index goes

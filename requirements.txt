@@ -1,6 +1,7 @@
 # --- Core RAG pipeline ---
 sentence-transformers==3.0.1     # turns text into numbers (embeddings)
 faiss-cpu==1.11.0                # vector store: finds similar chunks fast
+rank-bm25==0.2.2                 # keyword search (BM25) for hybrid retrieval
 google-genai==2.13.0             # talks to the AI (Gemini) to write answers
 python-dotenv==1.0.1             # safely loads your secret API key
 pyyaml==6.0.2                    # reads the config.yaml settings file
