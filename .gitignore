@@ -216,3 +216,13 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- Project-specific ---
+
+# Generated vector index (regenerate with: python -m scripts.build_index)
+data/index/*
+!data/index/.gitkeep
+
+# Personal source documents (your own files stay off GitHub)
+data/raw/*
+!data/raw/.gitkeep
